@@ -10,15 +10,13 @@
             <th>Time</th>
             <th>Teacher</th>
             <th>Email</th>
-            <th>Apply</th>
         </tr>
-        {% for session in sessions %}
+        {% for class in classes %}
         <tr>
-            <td>{{ session[1] }}</td>
-            <td>{{ session[2] }}</td>
-            <td>{{ session[3] }}</td>
-            <td>{{ session[4] }} {{ session[5] }}</td>
-            <td>{{ session[6] }}</td>
+            <td>{{ class[1] }}</td>
+            <td>{{ class[2] }}</td>
+            <td>{{ class[3] }}</td>
+            <td>{{ class[4] }} {{ class[5] }}</td>
         </tr>
         {% endfor %}
     </table>

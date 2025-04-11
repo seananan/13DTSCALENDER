@@ -1,16 +1,14 @@
 {% extends "base.html" %}
-
-{% block pageheading %}
-    {% if session.logged_in %}
-        <br> Hello, {{ user_name }}!
-    {% else %}
-        <br> Welcome to the Wellington College assessment calendar!
-        <br> Please sign up or log in.
-    {% endif %}
-{% endblock %}
-
 {% block main %}
     <div style="text-align: center;">
         <img src="/static/images/wellingtoncollegelogo.jpg" style="max-width: 100%; height: auto;">
     </div>
+{% endblock %}
+{% block pageheading %}
+    {% if session.logged_in %}
+        <br> Welcome to the Wellington College assessment calendar, {{ user_name }}!
+    {% else %}
+        <br> Welcome to the Wellington College assessment calendar!
+        <br> Please sign up or log in.
+    {% endif %}
 {% endblock %}

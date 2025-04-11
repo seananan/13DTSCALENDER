@@ -66,8 +66,10 @@ def render_signup_page():
         is_teacher = 1 if user_role == "Teacher" else 0
         query_insert = "INSERT INTO user (first_name, last_name, email, password, is_teacher) VALUES (?, ?, ?, ?, ?)"
         cur.execute(query_insert, (fname, lname, email, hashed_password, is_teacher))
+        user_id = cur.lastrowid
         con.commit()
         con.close()
+        session['user_id'] = user_id
         session["logged_in"] = True
         session['is_teacher'] = is_teacher
         return redirect("/")
@@ -130,9 +132,13 @@ def render_creategroup_page():
 @app.route('/yourgroups',methods=['POST', 'GET'])
 def render_yourgroups_page():
     con=connect_database(DATABASE)
-    cur=con.cursor
-    query=
-    return render_template("yourgroups.html")
+    cur=con.cursor()
+    query = "SELECT group_class.group_id, group_class.group_subject, group_class.group_year, group_class.group_password, group_class.group_date, group_class.group_time, user.first_name, user.last_name, user.email FROM group_class JOIN user ON group_class.fk_user_id = user.user_id"
+    cur.execute(query)
+    classes = cur.fetchall()
+    con.close()
+    print(classes)
+    return render_template("yourgroups.html", classes=classes)
 
 if __name__ == '__main__':
     app.run()
