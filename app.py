@@ -118,12 +118,10 @@ def render_creategroup_page():
         subject = request.form.get('subject')
         level = request.form.get('level')
         password = request.form.get('password')
-        date = request.form.get('date')
-        time = request.form.get('time')
         con = connect_database(DATABASE)
         cur=con.cursor()
-        query_insert = "INSERT INTO group_class (group_subject, group_year, group_password, group_date, group_time) VALUES (?, ?, ?, ?, ?)"
-        cur.execute(query_insert, (subject, level, password, date, time))
+        query_insert = "INSERT INTO group_class (group_subject, group_year, group_password) VALUES (?, ?, ?)"
+        cur.execute(query_insert, (subject, level, password))
         con.commit()
         con.close()
         redirect("/")
@@ -133,7 +131,7 @@ def render_creategroup_page():
 def render_yourgroups_page():
     con=connect_database(DATABASE)
     cur=con.cursor()
-    query = "SELECT group_class.group_id, group_class.group_subject, group_class.group_year, group_class.group_password, group_class.group_date, group_class.group_time, user.first_name, user.last_name, user.email FROM group_class JOIN user ON group_class.fk_user_id = user.user_id"
+    query = "SELECT group_class.group_id, group_class.group_subject, group_class.group_year, group_class.group_password, user.first_name, user.last_name, user.email FROM group_class JOIN user ON group_class.fk_user_id = user.user_id"
     cur.execute(query)
     classes = cur.fetchall()
     con.close()
